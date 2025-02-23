@@ -22,7 +22,7 @@ function SearchResultPage() {
 
     const getAPIs = data => {
         const newData = data.map(el => `http://www.omdbapi.com/?i=${el.imdbID}&apikey=d3d7f8c0`)
-        setFilmsAPIs(newData)
+        setFilmsAPIs(newData.slice(0, 6))
     }
 
     useEffect(() => {
