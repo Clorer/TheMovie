@@ -1,7 +1,7 @@
 import React from 'react'
 import CurrentFilm from '../Components/CurrentFilm'
 import Search from '../Components/Seacrh'
-import { useState, useEffect } from 'react';
+import WatchList from '../Components/WatchList'
 
 export default function MainPage() {
 
@@ -9,7 +9,10 @@ export default function MainPage() {
   return (
     <>
       <Search />
-      <CurrentFilm APIs={''} />
+      <div className='flex justify-between'>
+        <CurrentFilm />
+        <WatchList />
+      </div>
     </>
   )
 }

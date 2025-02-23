@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { motion } from 'framer-motion';
+import { filmsListContext } from '../context';
 import FilmCard from '../Components/FilmCard';
 import Trailer from '../Components/Trailer';
 import Search from '../Components/Seacrh'
@@ -8,9 +9,19 @@ import Search from '../Components/Seacrh'
 export default function Film() {
   const [filmInfo, setFilmInfo] = useState(null);
   const [isWatchlist, setIsWatchlist] = useState(false);
+  const filmsList = useContext(filmsListContext);
   const params = useParams();
   const url = `http://www.omdbapi.com/?i=${params.filmId}&apikey=d3d7f8c0`;
 
+
+  const addToWatchlist = () => {
+    setIsWatchlist((prev) => !prev)
+    if (!filmsList.watchlist.includes(url)) {
+      filmsList.watchlist.push(url);
+    } else {
+      filmsList.watchlist.splice(filmsList.watchlist.indexOf(url), 1);
+    }
+  }
 
   const getInfo = async (url) => {
     const response = await fetch(url);
@@ -20,15 +31,20 @@ export default function Film() {
 
   useEffect(() => {
     getInfo(url);
-  }, [url])
+    if (filmsList.watchlist.includes(url) && !isWatchlist) {
+      setIsWatchlist(true);
+    } else if (!filmsList.watchlist.includes(url) && isWatchlist) {
+      setIsWatchlist(false);
+    }}, [url])
+
   return (
     <>
-    <Search />
-    <div className=' flex justify-between mt-17'>
-      {filmInfo && <p className='text-3xl font-extrabold '>{filmInfo.Title}</p>}
-      <motion.button
+      <Search />
+      <div className=' flex justify-between mt-17'>
+        {filmInfo && <p className='text-3xl font-extrabold '>{filmInfo.Title}</p>}
+        <motion.button
           className='bg-gray-200 rounded-3xl px-5 font-semibold flex items-center gap-2 hover:cursor-pointer'
-          onClick={() => setIsWatchlist((prev) => !prev)}
+          onClick={() => addToWatchlist()}
           whileTap={{ scale: 0.8 }}
           whileHover={{ scale: 1.05 }}
         >
@@ -51,10 +67,10 @@ export default function Film() {
 
           <p>{isWatchlist ? 'Added to watchlist' : 'Add to watchlist'}</p>
         </motion.button>
-    </div>
+      </div>
       <div className='flex justify-between'>
-        <FilmCard filmInfo={filmInfo}/>
-        <Trailer filmTitle={filmInfo}/>
+        <FilmCard filmInfo={filmInfo} />
+        <Trailer filmTitle={filmInfo} />
       </div>
     </>
   )

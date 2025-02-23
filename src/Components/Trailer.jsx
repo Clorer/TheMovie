@@ -13,7 +13,7 @@ export default function Trailer({filmTitle}) {
     }
 
     useEffect(() => {
-        getTrailer();
+        filmTitle && getTrailer();
     }, [filmTitle])
 
   return trailerUrl ? (
