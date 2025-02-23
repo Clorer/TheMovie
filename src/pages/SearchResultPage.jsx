@@ -6,17 +6,24 @@ import { useState, useEffect } from 'react';
 
 function SearchResultPage() {
     const title = encodeURIComponent(useParams().searchTerm);
+    console.log('Search movie:', title);
     const [filmsAPIs, setFilmsAPIs] = useState([]);
-    const url = `http://www.omdbapi.com/?s=${title}&apikey=d3d7f8c0` 
+    const url = `http://www.omdbapi.com/?s=${title}&apikey=d3d7f8c0`
 
     const fetchUrl = async (url) => {
         try {
             const response = await fetch(url);
             const data = await response.json();
-            if (!data.Search || data.Search.length === 0) setFilmsAPIs([]);
-            getAPIs(data.Search); 
-        } catch (e) {
-            console.error('Error: ', e) 
+            if (data.Response === 'True') {
+                setFilmsAPIs(data.Search || []);
+            } else {
+                console.error("API Response Error:", data);
+                setFilmsAPIs([]);
+            }
+            data.Search && getAPIs(data.Search);
+        }
+        catch (e) {
+            console.error('Error: ', e)
         }
     }
 
@@ -24,11 +31,11 @@ function SearchResultPage() {
         const newData = data.map(el => `http://www.omdbapi.com/?i=${el.imdbID}&apikey=d3d7f8c0`)
         setFilmsAPIs(newData.slice(0, 6))
     }
-    
+
 
     useEffect(() => {
-        fetchUrl(url); 
-    }, [filmsAPIs])
+        fetchUrl(url);
+    }, [title])
 
     return (
         <>

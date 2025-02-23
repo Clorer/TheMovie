@@ -3,13 +3,13 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 
 export default function Trailer({filmTitle}) {
-    const YOUTUBE_API_KEY = 'AIzaSyCB7pZOUa5ARmuM-99b1XE5VSsOip05Fqk'
+    const YOUTUBE_API_KEY = '' //'AIzaSyCB7pZOUa5ARmuM-99b1XE5VSsOip05Fqk'
     const [trailerUrl, setTrailerUrl] = useState(null)
 
     const getTrailer = async() => {
         const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(filmTitle.Title + " official trailer")}&key=${YOUTUBE_API_KEY}&maxResults=1&type=video`);
         const data = await response.json();
-        setTrailerUrl(data.items[0].id.videoId);
+        data.items ? setTrailerUrl(data.items[0].id.videoId) : setTrailerUrl(null);
     }
 
     useEffect(() => {

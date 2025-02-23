@@ -7,8 +7,8 @@ function WatchList() {
     const watchlist = useContext(filmsListContext).watchlist;
     return watchlist.length > 0 ? (
         <div className='mr-35 w-[35%]'>
-            <p className='mt-17 mb-5 text-xl font-extrabold'>Watchlist</p>
-            <div className='flex gap-3 items-center h-64'>
+            <p className='mt-17 ml-5 mb-5 text-xl font-extrabold'>Watchlist</p>
+            <div className='flex gap-3 items-center h-48'>
                     {watchlist.map((film, index) => <FilmCapture key={index} filmAPI={film} />)}
             </div>
         </div>

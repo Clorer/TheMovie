@@ -17,7 +17,7 @@ const handleSearch = (e) => {
 
   return (
     <>
-      <Link to='/'><p className="absolute font-extrabold text-xl">The<br />Movie<br />Tracker</p></Link>
+      <Link to='/'><p className="absolute font-extrabold text-3xl">The<br />Movie<br />Tracker</p></Link>
       
       <div className="flex pt-5">
         <motion.input

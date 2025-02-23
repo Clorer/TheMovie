@@ -20,11 +20,11 @@ function FilmCapture({ filmAPI }) {
     }, [filmAPI])
 
     return (
-        <>
+        <div>
             {
                 capture ? (
-                    <Link className="inline-block" to={`/films/${capture.imdbID}`}>
-                        <img className='rounded-2xl origin-bottom w-[170px] h-[250px] hover:w-[180px]  hover:h-[265px] transition-all duration-300 ease-in-out hover:cursor-pointer' src={capture.Poster} alt={capture.Title} />
+                    <Link className="inline-block min-w-[140px]" to={`/films/${capture.imdbID}`}>
+                        <img className='rounded-2xl origin-bottom w-[140px] h-[206px] hover:w-[150px]  hover:h-[221px] transition-all duration-300 ease-in-out hover:cursor-pointer' src={capture.Poster} alt={capture.Title} />
                     </Link>
                 )
                     :
@@ -53,7 +53,7 @@ function FilmCapture({ filmAPI }) {
             }
 
 
-        </>
+        </div>
     )
 }
 
