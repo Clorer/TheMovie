@@ -21,6 +21,7 @@ export default function Film() {
     } else {
       filmsList.watchlist.splice(filmsList.watchlist.indexOf(url), 1);
     }
+    localStorage.setItem('filmslist', JSON.stringify(filmsList));
   }
 
   const getInfo = async (url) => {

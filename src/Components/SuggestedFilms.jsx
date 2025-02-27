@@ -1,34 +1,57 @@
 import React, { useContext } from 'react';
 import FilmCapture from './FilmCapture';
 import { filmsListContext } from '../context';
-import Slider from 'react-slick';
-import "slick-carousel/slick/slick.css"; 
-import "slick-carousel/slick/slick-theme.css";
-
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from'swiper/modules';
+import 'swiper/css';
 
 function SuggestedFilms() {
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 10, // 3 фильма одновременно
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 2000, // Сделал 3 секунды
-  };
 
   const suggestedFilms = useContext(filmsListContext).suggest;
 
   return suggestedFilms.length > 0 ? (
     <div>
       <h2 className="mt-5 ml-5 mb-5 text-xl font-extrabold">Suggested Films</h2>
-      <Slider {...settings}>
-        {suggestedFilms.map((film) => (
-          <div key={film}> {/* Каждый фильм — отдельный слайд */}
-            <FilmCapture filmAPI={`http://www.omdbapi.com/?i=${film}&apikey=d3d7f8c0`} />
-          </div>
+      <Swiper 
+      spaceBetween={10}
+      slidesPerView={3}
+      loop={true}
+      modules={[Autoplay]}
+      autoplay={{
+        delay: 2500,
+        disableOnInteraction: false,
+      }}
+      breakpoints={{
+        640: {
+          slidesPerView: 4,
+          spaceBetween: 10
+        },
+        800: {
+          slidesPerView: 5,
+          spaceBetween: 10
+        },
+        1024: {
+          slidesPerView: 6,
+          spaceBetween: 10
+        },
+        1240: {
+          slidesPerView: 7,
+          spaceBetween: 10
+        },
+        1480: {
+          slidesPerView: 8,
+          spaceBetween: 10
+        },
+        1600: {
+          slidesPerView: 9,
+          spaceBetween: 10
+        },
+        }}>
+          {suggestedFilms.map((film) => (
+            <SwiperSlide><FilmCapture key={film} filmAPI={`http://www.omdbapi.com/?i=${film}&apikey=d3d7f8c0`} /></SwiperSlide>
         ))}
-      </Slider>
+        </Swiper>
+        
     </div>
   ) : null;
 }

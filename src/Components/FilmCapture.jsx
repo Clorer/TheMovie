@@ -23,7 +23,7 @@ function FilmCapture({ filmAPI }) {
         <div>
             {
                 capture ? (
-                    <Link className="inline-block min-w-[140px]" to={`/films/${capture.imdbID}`}>
+                    <Link className="flex min-w-[140px] h-56 items-center" to={`/films/${capture.imdbID}`}>
                         <img className='rounded-2xl origin-bottom w-[140px] h-[206px] hover:w-[150px]  hover:h-[221px] transition-all duration-300 ease-in-out hover:cursor-pointer' src={capture.Poster} alt={capture.Title} />
                     </Link>
                 )
